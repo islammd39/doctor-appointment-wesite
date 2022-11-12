@@ -18,7 +18,7 @@ const InfoCard = () => {
             "name":"Visit Our location",
             "icon":location,
             "details":"1/2 united street, United State-7704",
-            "bgColor":"bg-accent"
+            "bgColor":"bg-secondary"
         },
         {
             "id":3,

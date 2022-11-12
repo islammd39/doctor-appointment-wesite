@@ -4,7 +4,7 @@ import appointment from "../../../assets/images/appointment.png"
 
 const MakeAppointment = () => {
   return (
-    <section style={{background:`url(${appointment}`}}>
+    <section style={{background:`url(${appointment})`}}>
       <div className="hero lg:my-10">
         <div className="hero-content flex-col lg:flex-row-reverse lg:mx-5 p-0">
           <img
