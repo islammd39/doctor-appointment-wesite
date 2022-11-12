@@ -1,10 +1,15 @@
 import React from "react";
 import bannerImage from "../../../assets/images/chair.png"
+import bg from "../../../assets/images/bg.png"
 
 const Banner = () => {
   return (
     <div className="lg:p-10">
-      <div className="hero lg:py-10">
+      <div style={{
+        background:`url(${bg})`,
+        backgroundSize:"cover",
+        backgroundPosition:"center"
+    }} className="hero lg:py-10">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <img
             src={bannerImage}
