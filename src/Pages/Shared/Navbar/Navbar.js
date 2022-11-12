@@ -5,7 +5,7 @@ const Navbar = () => {
 
     const menuItems = 
     <React.Fragment>
-    <li><Link to="/">Home</Link></li>
+    <li><button className="hidden lg:flex rounded bg-accent text-white hover:bg-primary active:bg-accent focus:outline-none focus:ring focus:ring-violet-300 ..."><Link to="/">Home</Link></button></li>
     <li><Link to="/appointment">Appointment</Link></li>
     <li><Link to="/about">About</Link></li>
     <li><Link to="/reviews">Reviews</Link></li>
@@ -40,7 +40,7 @@ const Navbar = () => {
             {menuItems}
           </ul>
         </div>
-        <Link to="/" className="btn btn-ghost normal-case text-xl">daisyUI</Link>
+        <Link to="/" className="btn btn-ghost normal-case text-xl hidden lg:flex">Doctor Appointment</Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal p-0">
@@ -48,7 +48,7 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <Link to ="/" className="btn">Get started</Link>
+        <Link to ="/" className="btn btn-primary border-none hover:text-white">Appointment</Link>
       </div>
     </div>
   );
