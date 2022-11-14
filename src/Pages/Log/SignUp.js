@@ -20,6 +20,22 @@ const SignUp = () => {
           <form onSubmit={handleSubmit(onSubmit)} className="w-96">
             <div className="form-control w-full">
               <label className="label">
+                <span className="label-text">Your name</span>
+              </label>
+              <input
+                {...register("name", { required: true })}
+                type="text"
+                className="input input-bordered w-full"
+                aria-invalid={errors.name ? "true" : "false"}
+              />
+              {errors.name?.type === "required" && (
+                <p className="text-red-400 my-2" role="alert">
+                  Your name is required
+                </p>
+              )}
+            </div>
+            <div className="form-control w-full">
+              <label className="label">
                 <span className="label-text">Email</span>
               </label>
               <input
@@ -39,11 +55,20 @@ const SignUp = () => {
                 <span className="label-text">Password</span>
               </label>
               <input
-                {...register("password", { required: "password is required", minLength:{value:6, message:"password must be six character"} })}
+                {...register("password", {
+                  required: "password is required",
+                  minLength: {
+                    value: 6,
+                    message: "password must be six character",
+                  },
+                  pattern: {value:/^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=[^0-9]*[0-9])/, message:"password must be strong" }
+                })}
                 type="password"
                 className="input input-bordered w-full"
               />
-              {errors.password && <p className="text-red-400 my-2">{errors.password?.message}</p>}
+              {errors.password && (
+                <p className="text-red-400 my-2">{errors.password?.message}</p>
+              )}
             </div>
             <input
               type="submit"
