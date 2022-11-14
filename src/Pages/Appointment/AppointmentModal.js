@@ -11,6 +11,15 @@ const AppointmentModal = ({ treatment, selected }) => {
       const name = from.name.value;
       const email = from.email.value;
       const number = from.number.value;
+      
+      const appointment = {
+        bookingDate:Date,
+        bookingSlot:slot,
+        patientName:name,
+        bookingEmail:email,
+        bookingNumber:number
+      }
+      console.log(appointment);
   }
   return (
     <>
