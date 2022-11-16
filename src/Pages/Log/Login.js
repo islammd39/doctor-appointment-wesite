@@ -1,15 +1,29 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../Context/AuthProvider";
 
 const Login = () => {
+  const [error, setError]=useState("")
+  const {userSignIn} = useContext(AuthContext)
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
-  const [data, setData] = useState("");
-  console.log(data);
+  const handleLogin = data =>{
+    userSignIn(data.email, data.password)
+    .then(result=>{
+      const user = result.user;
+      console.log(user);
+    })
+    .catch(error=> {
+      console.error(error)
+      setError(error.message)
+    })
+      
+  }
+  
 
   return (
     <div className="lg:flex justify-center items-center lg:h-[600px]">
@@ -18,7 +32,7 @@ const Login = () => {
           login !!!
         </h2>
         <form
-          onSubmit={handleSubmit((data) => setData(JSON.stringify(data)))}
+          onSubmit={handleSubmit(handleLogin)}
           className="w-96"
         >
           <div className="form-control w-full">
@@ -55,6 +69,7 @@ const Login = () => {
             value="Login"
             className="btn btn-accent w-full text-white mt-5"
           />
+          <p>{error}</p>
           <p className="text-center mb-3">
             <span className="label-text">
               new to doctor website ? please
