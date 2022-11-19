@@ -1,9 +1,13 @@
 import { format } from "date-fns";
-import React from "react";
+import React, { useContext } from "react";
+import toast from "react-hot-toast";
+import { AuthContext } from "../../Context/AuthProvider";
 
 const AppointmentModal = ({ treatment, selected }) => {
     const Date = format(selected, 'PP')
-  const { name, slots } = treatment;
+  const { name:treatmentName, slots } = treatment;
+  // console.log(treatment);
+  const {user} = useContext(AuthContext)
   const handleSubmit = (e) =>{
       e.preventDefault()
       const from = e.target;
@@ -14,12 +18,31 @@ const AppointmentModal = ({ treatment, selected }) => {
       
       const appointment = {
         bookingDate:Date,
-        bookingSlot:slot,
-        patientName:name,
-        bookingEmail:email,
-        bookingNumber:number
+        treatment:treatmentName,
+        patient:name,
+        slot,
+        email,
+        number
       }
-      console.log(appointment);
+      fetch('http://localhost:5000/bookings', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(appointment)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.acknowledged) {
+                    toast.success('Booking confirmed');
+          
+                }
+                else{
+                    toast.error(data.message);
+                }
+            })
+
   }
   return (
     <>
@@ -33,9 +56,9 @@ const AppointmentModal = ({ treatment, selected }) => {
             ✕
           </label>
           <h3 className="text-2xl text-center font-bold text-primary">
-            {name}
+            {treatmentName}
           </h3>
-          <form onClick={handleSubmit} className="mt-3">
+          <form onSubmit={handleSubmit} className="mt-3">
             <input
               type="text"
               disabled
@@ -44,24 +67,26 @@ const AppointmentModal = ({ treatment, selected }) => {
             />
             <select name="slot" className="select select-bordered w-full my-2">
               {
-                slots.map(slot => <option key={slot} value={slot}>{slot}</option>)
+                slots.map((slot, i) => <option key={i} value={slot}>{slot}</option>)
               }
             </select>
             <input
               name="name"
               type="text"
+              defaultValue={user?.displayName}
               placeholder="name"
               className="input input-bordered w-full my-2"
             />
             <input
               name="email"
               type="email"
+              defaultValue={user?.email}  
               placeholder="your email"
               className="input input-bordered w-full my-2"
             />
             <input
               name="number"
-              type="number"
+              type="text"
               placeholder="Your phone number"
               className="input input-bordered w-full my-2"
             />
